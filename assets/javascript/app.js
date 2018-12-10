@@ -50,17 +50,25 @@ database.ref().on("child_added", function(snapshot){
     //calculate minutes away
     //convert first time and current time to minutes. subtract first from next and %frequency
     var timeDiff = moment().diff(moment(start, "HH:mm"), "minutes")
-    console.log(timeDiff)
 
     if(timeDiff < 0){
-        next = start;
+        next = moment(start, "HH:mm").format("h:mm a")
         minutesUntil = moment(start, "HH:mm").diff(moment(), "minutes")
     }
     else{
         minutesSince = timeDiff % freq;
         minutesUntil = freq - minutesSince
-        console.log(minutesUntil)
-        next = moment().add(minutesUntil, "m").format("HH:mm");
+        next = moment().add(minutesUntil, "m").format("h:mm a");
+    }
+    if(minutesUntil >= 60){
+        a = minutesUntil
+        var hours = Math.trunc(a/60);
+        var minutes = a % 60;
+        console.log(hours +":"+ minutes)
+        minutesUntil = hours + " hr " + minutes + " min"
+    }
+    else{
+        minutesUntil = minutesUntil + " min"
     }
 
     newRow.append("<td>" + next + "</td>");
