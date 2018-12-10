@@ -34,19 +34,19 @@
             <form>
                 <div class="form-group">
                     <label for="train-name-input">Train Name</label>
-                    <input type="text" class="form-control" id="train-name-input">
+                    <input type="text" class="form-control" id="train-name-input" required>
                 </div>
                 <div class="form-group">
                     <label for="train-destination-input">Train Destination</label>
-                    <input type="text" class="form-control" id="train-destination-input">
+                    <input type="text" class="form-control" id="train-destination-input" required>
                 </div>
                 <div class="form-group">
                     <label for="train-time-input">First Train Time (HH:mm)</label>
-                    <input type="time" class="form-control" id="train-time-input">
+                    <input type="time" class="form-control" id="train-time-input" required>
                 </div>
                 <div class="form-group">
                     <label for="train-freq-input">Frequency (min)</label>
-                    <input type="number" class="form-control" id="train-freq-input" min="0" max="60">
+                    <input type="number" class="form-control" id="train-freq-input" min="0" max="60" required>
                 </div>
                 <button type="submit" id="add-train" class="btn btn-primary">Submit</button>
             </form>

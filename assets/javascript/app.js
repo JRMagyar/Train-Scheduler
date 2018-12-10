@@ -39,20 +39,32 @@ database.ref().on("child_added", function(snapshot){
     
     //calculate next arrival
     //add (frequency) minutes to the start time until it is past current time. If it is past midnight next train time is first run time.
-    start = snapshot.val().trainTime;
-    freq = snapshot.val().trainFreq
-    now = moment().format("HH:mm")
+    var start = snapshot.val().trainTime;
+    var freq = snapshot.val().trainFreq
+    var now = moment().format("HH:mm")
+    var next = "";
     // console.log(start)
     // console.log(freq)
     // console.log(now)
-    // for(i = start; moment(i, "HH:mm").isBefore(moment(now,"HH:mm")) == true ; moment(i, "HH:mm").add(parseInt(freq), "m").format("HH:mm")){
-    //     console.log(moment(i, "HH:mm").format("HH:mm"))
-    // }
-
-    
-
+   
     //calculate minutes away
-    //convert first time and next arrival to minutes. subtract first from next and %frequency
+    //convert first time and current time to minutes. subtract first from next and %frequency
+    var timeDiff = moment().diff(moment(start, "HH:mm"), "minutes")
+    console.log(timeDiff)
+
+    if(timeDiff < 0){
+        next = start;
+        minutesUntil = moment(start, "HH:mm").diff(moment(), "minutes")
+    }
+    else{
+        minutesSince = timeDiff % freq;
+        minutesUntil = freq - minutesSince
+        console.log(minutesUntil)
+        next = moment().add(minutesUntil, "m").format("HH:mm");
+    }
+
+    newRow.append("<td>" + next + "</td>");
+    newRow.append("<td>" + minutesUntil + "</td>")
 
     $("#schedule").append(newRow)
 })
